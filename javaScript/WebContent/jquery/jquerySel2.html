@@ -1,1 +1,39 @@
-html:5
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <script>
+         $(Document).ready(function () {
+        //     $("#btn").click(function () {
+        //         $("h2").hide();
+        //     })
+        //     $("#btn2").click(function () {      
+        // })
+        var elem = $("p").eq(0);
+        console.log(elem);
+        elem.click(function () {
+            console.log(this);
+         //   $(this).hide();
+        })
+    });
+
+
+
+    </script>
+</head>
+
+<body>
+    <h2>a Heading</h2>
+    <p class="int">a Paragraph</p>
+    <p>a Another</p>
+    <h2 class="int">Another Heading</h2>
+    <button id="btn1">Click</button>
+    <button id="btn2">Click</button>
+</body>
+
+</html>
