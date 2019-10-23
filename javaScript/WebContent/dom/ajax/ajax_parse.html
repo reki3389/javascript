@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body id="bdy">
+    <script>
+        var xhtp = new XMLHttpRequest();
+        xhtp.onreadystatechange = function () {
+            if (xhtp.readyState == 4 && xhtp.status == 200) {
+                //console.log(this.responseText);
+                var obj = JSON.parse(this.responseText);
+                console.log(obj);
+                table(obj);
+            }
+
+        }
+        xhtp.open("get", "MOCK_DATA.json");
+        xhtp.send();
+        function table(obj) {
+            var table = document.createElement("table");
+            table.setAttribute("border",  1);
+            for (var i = 0; i < obj.length; i++) {
+                var tr = document.createElement("tr");
+
+                for (field in obj[i]) {
+                    var td = document.createElement("td");
+                    var val = document.createTextNode(obj[i][field]);
+                    td.appendChild(val);
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            document.getElementById("bdy").append(table);
+        }
+        
+        // function table(obj) {
+        //     var table = document.createElement("table");
+        //     table.setAttribute("id", "tbl");
+        //     table.setAttribute("border", "1");
+
+        //     var th1 = document.createElement("th");
+        //     var val1 = document.createTextNode("email");
+        //     th1.appendChild(val1);
+
+        //     var th2 = document.createElement("th");
+        //     var val2 = document.createTextNode("first_name");
+        //     th2.appendChild(val2);
+
+        //     var th3 = document.createElement("th");
+        //     var val3 = document.createTextNode("gender");
+        //     th3.appendChild(val3);
+
+        //     var th4 = document.createElement("th");
+        //     var val4 = document.createTextNode("id");
+        //     th4.appendChild(val4);
+
+        //     var th5 = document.createElement("th");
+        //     var val5 = document.createTextNode("ip_address");
+        //     th5.appendChild(val5);
+
+        //     var th6 = document.createElement("th");
+        //     var val6 = document.createTextNode("last_name");
+        //     th6.appendChild(val6);
+
+        //     var tr = document.createElement("tr");
+        //     tr.append(th1, th2, th3, th4, th5, th6);
+        //     table.append(tr);
+
+
+
+            // for (var i = 0; i < obj.length; i++) {
+            //     var td1 = document.createElement("td");
+            //     var val1 = document.createTextNode(obj[i].email);
+            //     td1.appendChild(val1);
+
+            //     var td2 = document.createElement("td");
+            //     var val2 = document.createTextNode(obj[i].first_name);
+            //     td2.appendChild(val2);
+
+            //     var td3 = document.createElement("td");
+            //     var val3 = document.createTextNode(obj[i].gender);
+            //     td3.appendChild(val3);
+
+            //     var td4 = document.createElement("td");
+            //     var val4 = document.createTextNode(obj[i].id);
+            //     td4.appendChild(val4);
+
+            //     var td5 = document.createElement("td");
+            //     var val5 = document.createTextNode(obj[i].ip_address);
+            //     td5.appendChild(val5);
+
+            //     var td6 = document.createElement("td");
+            //     var val6 = document.createTextNode(obj[i].last_name);
+            //     td6.appendChild(val6);
+
+            //     var tr1 = document.createElement("tr");
+            //     tr1.append(td1, td2, td3, td4, td5, td6);
+            //     table.append(tr1);
+    </script>
+</body>
+
+</html>

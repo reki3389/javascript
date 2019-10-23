@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+        </p id="1">이름 : <input id="name" type="text" value="kwon">
+        </p id="2">아이디 : <input id="id" type="text" value="this">
+        </p id="3">비번 : <input id="pass" type="password" value="pass">
+        </p><button onclick="btn1()" id="btn">가입</button>
+    </div>
+    <script>
+
+        function btn1() {
+            var result;
+            var name1 = "이름 : " + input[0].value + "<br>";
+            var id1 = "아이디 : " + input[1].value + "<br>";
+            var pass1 = "비밀번호 : " + input[2].value + "<br>";
+            document.getElementById("1").innerHTML = name1;
+            document.getElementById("2").innerHTML = id1;
+            document.getElementById("3").innerHTML = pass1;
+            
+        } 
+    </script>
+</body>
+
+</html>

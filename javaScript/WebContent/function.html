@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo"></div>
+    <script>
+
+            function showResult(p1, p2) { // 함수 이름을 선언하기전에 호출해서 사용할 수 있음.
+                document.getElementById('demo').innerHTML = myMulti(p1, p2);
+            }
+            function myMulti(p1, p2) {
+                return p1 * p2;
+            }
+            
+            </script>
+    <button onclick="showResult(3, 5)">click</button>
+    <script>
+    var myVar = function(a, b) { //하지만 변수에 함수를 초기화 하면 선언전에 호출 할 수 없음.
+        return a + b;
+    }
+    console.log(myVar(5, 10));
+
+    var localV = 35;
+    function localFunc() {
+        console.log("Function: localV => " + localV);
+        localV=50;
+        console.log("Function: localV => " + localV);
+    }
+    localFunc();
+    console.log("Function: localV => " + localV);
+
+    var f = prompt("input fahrenheit : ");
+    var c = (f-32) * (5/9);
+    document.write("화씨온도" + f + "는 섭씨온도 " + c + "입니다.");
+
+    </script>
+</body>
+</html>
