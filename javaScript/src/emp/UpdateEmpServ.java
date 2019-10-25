@@ -18,6 +18,10 @@ public class UpdateEmpServ extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 				String empId = request.getParameter("empId");
 				String salary = request.getParameter("salary");
 				String email = request.getParameter("email");
@@ -31,7 +35,6 @@ public class UpdateEmpServ extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

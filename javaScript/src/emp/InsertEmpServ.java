@@ -17,6 +17,10 @@ public class InsertEmpServ extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		EmpDAO dao = new EmpDAO();
 		// 사용자가 입력한 항목의 값들...
 		String firstName = request.getParameter("firstName");

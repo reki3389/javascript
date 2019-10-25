@@ -6,8 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import common.DAO;
 
@@ -15,6 +16,32 @@ public class EmpDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	
+	public Map<String, Integer> getPersonPerDept() {
+		conn = DAO.getConnect();
+		String sql = "select d.department_name, e.department_id, count(*) as cnt from employees e, departments where e.department_id = d.department_id group by d.department_name, e.department_id";
+		Map <String, Integer> list = new HashMap<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String dept = rs.getString("department_name");
+				Integer cnt = rs.getInt("cnt");
+				list.put(dept, cnt);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+		
+	}
 	
 	public List<Employee> getJsonData() {
 		conn = DAO.getConnect();
