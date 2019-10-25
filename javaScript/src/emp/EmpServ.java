@@ -17,30 +17,28 @@ import javax.servlet.http.HttpServletResponse;
 public class EmpServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
-    public EmpServ() {
-        // TODO Auto-generated constructor stub
-    }
-    
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	public EmpServ() {
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 한글 깨질 때 UTF-8로 변경.
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
 		PrintWriter out = response.getWriter();
 		EmpDAO dao = new EmpDAO();
 		dao.getEmpList();
 		List<Employee> list = dao.getEmpList();
 		out.println("{\"data\":[");
 		int cnt = 0;
-		for(Employee emp : list) {
-			System.out.println(emp.getFirstName()+","+emp.getLastName());
-			out.println("{\"firstName\":\""+emp.getFirstName()+"\",\"lastName\":\""+emp.getLastName()+"\",\"email\":\""+emp.getEmail()+"\"}");
+		for (Employee emp : list) {
+			System.out.println(emp.getFirstName() + "," + emp.getLastName());
+			out.println("{\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName()
+					+ "\",\"email\":\"" + emp.getEmail() + "\"}");
 			cnt++;
-			if(list.size()!=cnt) {
+			if (list.size() != cnt) {
 				out.println(",");
 			}
 		}
@@ -48,11 +46,8 @@ public class EmpServ extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

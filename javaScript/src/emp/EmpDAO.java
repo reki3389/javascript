@@ -15,6 +15,59 @@ public class EmpDAO {
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	
+	public List<Employee> getJsonData() {
+		conn = DAO.getConnect();
+		String sql = "select first_name, last_name, salary, hire_date, email, job_id from emp_temp";
+		List<Employee> list = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Employee emp = new Employee();
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setSalary(rs.getInt("salary"));
+				emp.setHireDate(rs.getString("hire_date"));
+				emp.setEmail(rs.getString("email"));
+				emp.setJobId(rs.getString("job_id"));
+				list.add(emp);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	public void updateEmp(Employee emp) {
+		conn = DAO.getConnect();
+		String sql = "update emp_temp set salary = ?, email = ? where employee_id = ? ";
+		
+		try {
+			pstmt = conn.prepareCall(sql);
+			pstmt.setInt(1, emp.getSalary());
+			pstmt.setString(2,  emp.getEmail());
+			pstmt.setInt(3, emp.getEmployeeId());
+			int r = pstmt.executeUpdate();
+			System.out.println(r + "건이 변경되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		}
 
 	public void deleteEmployee(int empId) {
 		conn = DAO.getConnect();
@@ -24,7 +77,7 @@ public class EmpDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, empId);
 			int rs = pstmt.executeUpdate();
-
+			System.out.println(rs + "건이 삭제되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -39,17 +92,17 @@ public class EmpDAO {
 	public Employee getEmployee(int empId) {
 		conn = DAO.getConnect();
 		String sql = "select * from emp_temp where employee_id = ?";
-		String sql1 = "{? = call get_dept_name(?)}";
+		//String sql1 = "{? = call get_dept_name(?)}";
 		Employee emp = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, empId);
 			rs = pstmt.executeQuery();
-			CallableStatement cstmt = conn.prepareCall(sql1);
-			cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
-			cstmt.setInt(2, empId);
-			cstmt.execute();
-			String deptName = cstmt.getString(1);
+			//CallableStatement cstmt = conn.prepareCall(sql1);
+//			cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
+//			cstmt.setInt(2, empId);
+//			cstmt.execute();
+			//String deptName = cstmt.getString(1);
 			
 			if (rs.next()) {
 				emp = new Employee();
@@ -60,7 +113,7 @@ public class EmpDAO {
 				emp.setHireDate(rs.getString("hire_date"));
 				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("salary"));
-				emp.setDeptName(deptName);
+				//emp.setDeptName(deptName);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,11 +149,11 @@ public class EmpDAO {
 
 	public void insertEmp(Employee emp) {
 		conn = DAO.getConnect();
-		String sql = "insert into emp_temp(employee_id, first_name, last_name, email, hire_date, job_id, salary) values (?,?,?,?,?,?,?) ";
+		String sql = "insert into emp_temp(employee_id, first_name, last_name, email, hire_date, job_id, salary) values (employees_seq.nextval,?,?,?,?,?,?) ";
 		int rCnt = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(++rCnt, emp.getEmployeeId()); // 첫번째 parameta
+			//pstmt.setInt(++rCnt, emp.getEmployeeId()); // 첫번째 parameta 카운트 넥스트발을 통한 값 필요없음
 			pstmt.setString(++rCnt, emp.getFirstName()); // 두번째
 			pstmt.setString(++rCnt, emp.getLastName());
 			pstmt.setString(++rCnt, emp.getEmail());
@@ -125,7 +178,7 @@ public class EmpDAO {
 	public List<Employee> getEmpList() {
 		List<Employee> list = new ArrayList<>();
 		Connection conn = DAO.getConnect();
-		String sql = "select * from emp_temp";
+		String sql = "select * from emp_temp order by employee_id desc";
 		Employee emp = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
